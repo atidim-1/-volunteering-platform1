@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#000000">
+    <title>מאגר התנדבויות עתידים לקריירה</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
+
+        /* רשת משבצות */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0, 191, 255, 0.18) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(0, 191, 255, 0.18) 2px, transparent 2px);
+            background-size: 50px 50px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* אייקונים דקורטיביים */
+        .star {
+            position: fixed;
+            font-size: 100px;
+            font-weight: bold;
+            z-index: 1;
+            pointer-events: none;
+            text-shadow: 0 0 20px currentColor;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .star-1 { top: 8%; right: 10%; color: #90EE90; animation-delay: 0s; }
+        .star-2 { top: 22%; left: 7%; color: #00BFFF; animation-delay: 1s; }
+        .star-3 { top: 48%; right: 8%; color: #FFD700; animation-delay: 2s; }
+        .star-4 { top: 68%; left: 10%; color: #FF69B4; animation-delay: 0.5s; }
+        .star-5 { top: 82%; right: 12%; color: #00BFFF; animation-delay: 1.5s; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.1); }
+        }
+
+        .arrow {
+            position: fixed;
+            font-size: 90px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .arrow-1 { top: 32%; right: 18%; color: #FFA500; transform: rotate(-45deg); animation-delay: 1s; }
+        .arrow-2 { bottom: 30%; left: 20%; color: #FFD700; transform: rotate(135deg); animation-delay: 2.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-45deg); }
+            50% { transform: translateY(-15px) rotate(-45deg); }
+        }
+
+        .triangle {
+            position: fixed;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: spin 20s linear infinite;
+        }
+
+        .tri-1 { border-width: 0 50px 85px 50px; border-color: transparent transparent #00BFFF transparent; top: 14%; left: 4%; }
+        .tri-2 { border-width: 0 60px 100px 60px; border-color: transparent transparent #FF69B4 transparent; bottom: 20%; right: 5%; }
+        .tri-3 { border-width: 0 45px 75px 45px; border-color: transparent transparent #90EE90 transparent; top: 58%; left: 16%; }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .circle {
+            position: fixed;
+            width: 70px;
+            height: 70px;
+            border: 5px solid;
+            border-radius: 50%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.5;
+            animation: bounce 3s ease-in-out infinite;
+        }
+
+        .circle-1 { top: 16%; left: 28%; border-color: #90EE90; animation-delay: 0.5s; }
+        .circle-2 { bottom: 25%; right: 22%; border-color: #FF69B4; animation-delay: 1.5s; }
+        .circle-3 { top: 40%; right: 30%; border-color: #FFD700; width: 50px; height: 50px; animation-delay: 2s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .ladder {
+            position: fixed;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .ladder-1 {
+            top: 25%;
+            left: 12%;
+            width: 40px;
+            height: 100px;
+            border-left: 4px solid #00BFFF;
+            border-right: 4px solid #00BFFF;
+            background: repeating-linear-gradient(to bottom, transparent, transparent 18px, #00BFFF 18px, #00BFFF 22px);
+        }
+
+        .ladder-2 {
+            bottom: 35%;
+            right: 15%;
+            width: 35px;
+            height: 80px;
+            border-left: 4px solid #FF69B4;
+            border-right: 4px solid #FF69B4;
+            background: repeating-linear-gradient(to bottom, transparent, transparent 15px, #FF69B4 15px, #FF69B4 19px);
+            transform: rotate(15deg);
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            background: #000000;
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .logo { height: 60px; }
+        .header-text { flex: 1; }
+
+        .header h1 {
+            font-size: 1.5em;
+            color: white;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .search-section {
+            background: #000000;
+            padding: 16px 20px;
+            position: sticky;
+            top: 110px;
+            z-index: 99;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.15);
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 50px 14px 20px;
+            border: 2px solid rgba(0, 191, 255, 0.3);
+            border-radius: 30px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: white;
+            border-color: #00BFFF;
+            box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #00BFFF;
+            pointer-events: none;
+        }
+
+        .filters-location {
+            background: #000000;
+            padding: 12px 20px 8px;
+            position: sticky;
+            top: 170px;
+            z-index: 98;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.08);
+        }
+
+        .filter-label {
+            color: white;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            opacity: 0.7;
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 6px;
+        }
+
+        .filters-row::-webkit-scrollbar { display: none; }
+
+        .filters-category {
+            background: #000000;
+            padding: 8px 20px 12px;
+            position: sticky;
+            top: 232px;
+            z-index: 97;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.15);
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 2px solid rgba(0, 191, 255, 0.4);
+            padding: 9px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .chip:hover {
+            background: rgba(0, 191, 255, 0.15);
+            border-color: #00BFFF;
+        }
+
+        .chip.active {
+            background: #00BFFF;
+            color: white;
+            border-color: #00BFFF;
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
+        }
+
+        .chip-location.active {
+            background: #FF69B4;
+            border-color: #FF69B4;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+        }
+
+        .stats {
+            max-width: 1200px;
+            margin: 18px auto;
+            padding: 12px 18px;
+            background: rgba(0, 191, 255, 0.1);
+            border: 1px solid rgba(0, 191, 255, 0.3);
+            border-radius: 14px;
+            text-align: center;
+            font-weight: 600;
+            color: white;
+            font-size: 0.95em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
+            gap: 16px;
+        }
+
+        /* כרטיס קומפקטי */
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 3px 15px rgba(0, 191, 255, 0.2);
+            transition: all 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #00BFFF;
+            border-radius: 14px 0 0 14px;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 191, 255, 0.3);
+        }
+
+        .badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 700;
+        }
+
+        .badge-main { background: #00BFFF; color: white; }
+        .badge-sub { background: #ffe6f0; color: #FF1493; }
+        .badge-online { background: #90EE90; color: #006400; }
+        .badge-region { background: #FFE5B4; color: #8B4513; }
+
+        .card-title {
+            font-size: 1.05em;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .card-location {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .card-arrow {
+            position: absolute;
+            bottom: 18px;
+            left: 18px;
+            font-size: 1.2em;
+            color: #00BFFF;
+        }
+
+        /* Modal מלא */
+        .detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1001;
+            overflow-y: auto;
+        }
+
+        .detail-modal.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .detail-content {
+            background: white;
+            max-width: 700px;
+            margin: 20px auto;
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            animation: slideUp 0.4s;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .detail-close {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #f0f0f0;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .detail-close:hover {
+            background: #e0e0e0;
+            transform: rotate(90deg);
+        }
+
+        .detail-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .detail-title {
+            font-size: 1.6em;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            padding-left: 50px;
+        }
+
+        .detail-info {
+            display: flex;
+            align-items: start;
+            margin: 14px 0;
+            font-size: 1em;
+        }
+
+        .detail-icon {
+            font-size: 1.2em;
+            margin-left: 12px;
+            min-width: 28px;
+        }
+
+        .detail-text {
+            color: #555;
+            flex: 1;
+            line-height: 1.7;
+        }
+
+        .detail-text a {
+            color: #00BFFF;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .detail-description {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+            color: #666;
+            font-size: 1em;
+            line-height: 1.8;
+        }
+
+        .detail-value {
+            margin-top: 20px;
+            padding: 16px 18px;
+            background: linear-gradient(135deg, #e6f7ff 0%, #fff0f6 100%);
+            border-right: 4px solid #00BFFF;
+            border-radius: 14px;
+            font-size: 0.95em;
+            line-height: 1.7;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .detail-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 20px;
+            border-radius: 14px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .detail-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .detail-btn-email {
+            background: #00BFFF;
+            color: white;
+        }
+
+        .detail-btn-phone {
+            background: #FF69B4;
+            color: white;
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 14px 24px;
+            background: #FF69B4;
+            color: white;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(255, 105, 180, 0.4);
+            font-size: 0.95em;
+            font-weight: 700;
+            z-index: 1000;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .fab:hover {
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 105, 180, 0.6);
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid rgba(0, 191, 255, 0.2);
+            padding: 10px 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.7em;
+            z-index: 99;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 24px;
+            color: white;
+        }
+
+        .no-results-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+
+        .no-results-text {
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            body { padding-bottom: 100px; }
+            
+            .header {
+                padding: 20px 16px;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+
+            .logo { height: 48px; }
+            
+            .header h1 { 
+                font-size: 1.1em;
+                line-height: 1.3;
+            }
+
+            .search-section {
+                padding: 14px 16px;
+            }
+            
+            .search-input {
+                font-size: 16px;
+                padding: 13px 45px 13px 16px;
+            }
+
+            .search-icon {
+                left: 16px;
+                font-size: 18px;
+            }
+
+            .filters-location,
+            .filters-category {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .filter-label {
+                font-size: 0.8em;
+            }
+
+            .chip {
+                padding: 8px 13px;
+                font-size: 12px;
+            }
+
+            .stats {
+                font-size: 0.88em;
+                margin: 14px 16px;
+            }
+
+            .container {
+                padding: 0 16px 40px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .card-title {
+                font-size: 1em;
+            }
+
+            .star { font-size: 50px !important; }
+            .arrow { font-size: 45px !important; }
+            .triangle { border-width: 0 25px 40px 25px !important; }
+            .circle { width: 40px !important; height: 40px !important; }
+            .ladder { display: none; }
+
+            .detail-content {
+                margin: 10px;
+                padding: 25px 20px;
+                border-radius: 16px;
+            }
+
+            .detail-title {
+                font-size: 1.3em;
+                padding-left: 45px;
+            }
+
+            .detail-close {
+                top: 15px;
+                left: 15px;
+                width: 36px;
+                height: 36px;
+            }
+
+            .detail-info {
+                font-size: 0.92em;
+            }
+
+            .detail-value {
+                font-size: 0.88em;
+                padding: 14px 16px;
+            }
+
+            .detail-actions {
+                flex-direction: column;
+            }
+
+            .detail-btn {
+                width: 100%;
+            }
+
+            .fab {
+                bottom: 70px;
+                padding: 12px 20px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 { font-size: 1.05em; }
+            .logo { height: 44px; }
+            .detail-title { font-size: 1.2em; }
+        }
+    </style>
+</head>
+<body>
+    <!-- אייקונים דקורטיביים -->
+    <div class="star star-1">✦</div>
+    <div class="star star-2">✦</div>
+    <div class="star star-3">✦</div>
+    <div class="star star-4">✦</div>
+    <div class="star star-5">✦</div>
+    <div class="arrow arrow-1">➜</div>
+    <div class="arrow arrow-2">➜</div>
+    <div class="triangle tri-1"></div>
+    <div class="triangle tri-2"></div>
+    <div class="triangle tri-3"></div>
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="ladder ladder-1"></div>
+    <div class="ladder ladder-2"></div>
+
+    <div class="content">
+        <div class="header">
+            <div class="header-inner">
+                <img src="data:image/png;base64,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" alt="לוגו עתידים" class="logo">
+                <div class="header-text">
+                    <h1>מאגר מקומות התנדבות עתידים לקריירה</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" id="search" class="search-input" placeholder="חפש לפי שם, תיאור, עיר...">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+
+        <div class="filters-location">
+            <div class="filter-label">📍 סינון לפי איזור:</div>
+            <div class="filters-row">
+                <span class="chip chip-location" onclick="filterByLocation('הכל')">🌐 הכל</span>
+                <span class="chip chip-location" onclick="filterByLocation('מקוון')">💻 מקוון</span>
+                <span class="chip chip-location" onclick="filterByLocation('צפון')">🏔️ צפון</span>
+                <span class="chip chip-location" onclick="filterByLocation('מרכז')">🏙️ מרכז</span>
+                <span class="chip chip-location" onclick="filterByLocation('דרום')">🌵 דרום</span>
+                <span class="chip chip-location" onclick="filterByLocation('ירושלים')">🕎 ירושלים</span>
+                <span class="chip chip-location" onclick="filterByLocation('כל הארץ')">🇮🇱 כל הארץ</span>
+            </div>
+        </div>
+
+        <div class="filters-category">
+            <div class="filter-label">🎯 סינון לפי תחום:</div>
+            <div class="filters-row">
+                <span class="chip" onclick="filterByCategory('הכל')">📋 הכל</span>
+                <span class="chip" onclick="filterByCategory('חינוך וחונכות')">📚 חונכות</span>
+                <span class="chip" onclick="filterByCategory('קשישים וניצולי שואה')">👴 קשישים</span>
+                <span class="chip" onclick="filterByCategory('נוער וצעירים')">👦 נוער</span>
+                <span class="chip" onclick="filterByCategory('אריזות מזון וסיוע למזון')">🥘 מזון</span>
+                <span class="chip" onclick="filterByCategory('בעלי חיים')">🐕 בעלי חיים</span>
+            </div>
+        </div>
+
+        <div class="stats" id="stats">טוען...</div>
+
+        <div class="container">
+            <div class="cards" id="cards"></div>
+        </div>
+    </div>
+
+    <button class="fab" onclick="resetAll()">🔄 אפס מסננים</button>
+
+    <div class="footer">
+        עדכון אחרון: מרץ 2026
+    </div>
+
+    <!-- Modal לפרטי התנדבות -->
+    <div class="detail-modal" id="detailModal">
+        <div class="detail-content" id="detailContent">
+            <button class="detail-close" onclick="closeDetail()">×</button>
+            <div id="detailBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const DATA = [{"name": "יוצאים ללמוד- יוצאים לשינוי ", "type": "הוראת שיעורים פרטיים ליוצאי.ות החברה החרדית במקצועות שונים ", "location": "ארצי", "description": "שיעור בשבוע בתחום הרלוונטי למשך ארבעה חודשים פרונטלית/ בזום , נדרשת יכולת לימוד והוראה, שיבוץ לתלמיד.ה ייעשה בהתאם לצורך. לפרטים נוספים על התוכנית: https://did.li/HY9fT   ", "contact": "אסתר גילמאן רכזת יוצאים ללמוד", "phone": "508841523", "email": "esther@leshinuy.org", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "מקוון", "region": "מקוון", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": " סלון י-ם - יוצאים לשינוי ", "type": "אחריות על מרחב הopen space", "location": "הרברט סמואל 2, י-ם (סמוך לכיכר ציון)", "description": "מרחב הopen space  משמש ללמידה ועבודה, אחריות מפעיל הסלון הינה להוות נוכחות חברתית, לימודית ולוגיסטית: קבלת פני אנשים שמגיעים, אחריות לסדר וארגון במרחב חיובי ונעים ללמידה. התנדבות זו מיועדת למשתתפי המטרוטק בלבד. מינ' 2 משמרות של 4 שעות בחודש, ומקס' של 4 משמרות בחודש. הגעה לערב מפעילים פעמיים בשנה. ", "contact": "יעל אלהרר מנהלת סלון י-ם", "phone": "502091944", "email": "hasalon.jer@leshinuy.org", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "ירושלים", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "סלון ת\"א- יוצאים לשינוי ", "type": "אחריות על מרחב הopen space", "location": "שטרוק 21, ת\"א (סמוך לעיריית ת\"א)", "description": "מרחב הopen space  משמש ללמידה ועבודה, אחריות מפעיל הסלון הינה להוות נוכחות חברתית, לימודית ולוגיסטית: קבלת פני אנשים שמגיעים, אחריות לסדר וארגון במרחב חיובי ונעים ללמידה. התנדבות זו מיועדת למשתתפי המטרוטק בלבד. מינימום 2 משמרות של 4 שעות ומקסימום 5. ערב גיבוש אחת לרבעון.", "contact": "מינה פלדמן מנהלת סלון ת\"א", "phone": "502033058", "email": "manager.tlv@leshinuy.org", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "מרכז", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "סלון חיפה -יוצאים לשינוי", "type": "אחריות על מרחב הopen space", "location": "סירקין 21, חיפה (שוק תלפיות)", "description": "מרחב הopen space  משמש ללמידה ועבודה, אחריות מפעיל הסלון הינה להוות נוכחות חברתית, ולוגיסטית: קבלת פני אנשים שמגיעים, אחריות לסדר וארגון במרחב חיובי ונעים ללמידה. התנדבות זו מיועדת למשתתפי המטרוטק בלבד. מינ' 2 משמרות של 4 שעות בחודש, ומקסימום 5. ערב גיבוש אחת לרבעון.", "contact": "שרה קטן מנהלת סלון חיפה", "phone": "508841528", "email": "manager.haifa@leshinuy.org", "category": "עמותות וארגונים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "חונכות אקדמית במוסדות הלימוד השונים", "type": "חונכות אישית לימודית -  לסטודנטים בתוכנית עתידים לתעשיה ותוכניות נוספות של עמותת עתידים", "location": "כל הארץ", "description": "מתן תגבור ועזרה לימודית בתכני הנדסה/מדמח למשתתפים בתוכניות העמותה, מפגשים אישיים של שעה-שעתיים בזום או באוניברסיטה/מכללה - לפי הנוחות.", "contact": "רכזות התוכנית", "phone": "", "email": "", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "מקוון", "region": "מקוון", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "היחידה לקידום הסטודנט – טכניון", "type": "התנדבות במגוון פעילויות במסגרת היחידה לקידום הסטודנט בטכניון.", "location": "טכניון- חיפה", "description": "מיועד לסטודנטים מצטיינים החל משנה שניה בלבד!", "contact": "מזכירות היחידה", "phone": "04-8294112\n04-8294110", "email": "ksara@dp.technion.ac.il", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "צפון", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "מכינה בטכניון", "type": "אנו מציעים לחנוך וללוות לימודית-אקדמית את הסטודנטים במכינה. במסגרת הפעילות הסטודנטים יחנכו סטודנטים הלומדים במכינה במקצועות: מתמטיקה, פיזיקה ואנגלית ברמה של 5 יח\"ל. ", "location": "טכניון- חיפה", "description": "סיוע אקדמי לסטודנטים הלומדים במכינה בטכניון.", "contact": "יפעת דקל", "phone": "04-8294536/9", "email": "Yifat.d@technion.ac.il", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "צפון", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "מעונות טכניון", "type": "מתן שירות לסטודנטים שמתגוררים במעונות", "location": "", "description": "עבודה משרדית, קבלת קהל, תחזוקה קלה", "contact": "אלעד מרום", "phone": "050-6200096", "email": "eladma@technion.ac.il", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "צפון", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "התנדבות באוניברסיטת אריאל - מרכז שירות לסטודנט", "type": "מרכז שירות לסטודנט מפנה לפעילויות המתקיימות באוניברסיטה ובאריאל במגוון תחומים", "location": "אוניברסיטת אריאל, אריאל", "description": "מאתרים התנדבות שמתאימה לחונך- חונכות ילדים,קמפוס ירוק, מיחזור, עזרה בגנים בקהילה ועוד.", "contact": "רכזת מעורבות חברתית", "phone": "03-6453120", "email": "mh@ariel.ac.il", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "מרכז", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "לתת                          ", "type": "ריכוז מבצע איסוף מזון- בחגים- תפקיד אחראי הכולל שיבוץ, גיוס ותפעול מתנדבים; \nהתנדבות במחסני מזון - אריזה ומיון מזון, ספירות מלאי \nסיוע לניצולי שואה בפרויקט \"סיוע לחיים\"- שיחות טלפוניות לניצולים במשרדי הארגון או ביקור בבית של ניצול אחת לשבוע; \nהדרכה בארגון הנוער- ליווי והנחיית קבוצות נוער בנושא התנדבות ויזמות חברתית (דורש יותר מ-80 שעות התנדבות).", "location": "פריסה ארצית \n", "description": "ארגון לתת -הענקת סיוע לאוכלוסיות במצוקה על בסיס אוניברסאלי, הנעת החברה האזרחית לערבות הדדית, נתינה והובלת שינוי בסדר העדיפויות הלאומי.\nלתת הוא ארגון לא ממשלתי, א-פוליטי, וללא כוונת רווח הממומן מתרומות בלבד. הוא משמש ארגון גג ל-150 עמותות מקומיות, הפועלות ב-95 ישובים, ומחלקות מזון לכ-60,000 משפחות נזקקות ברחבי הארץ ובאופן שוטף. ", "contact": "ענבל מריח", "phone": "03-6833388           ", "email": "https://lp.vp4.me/peqt", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": "\"אחרי טק\"  ", "type": "ליווי של קבוצת תלמידי ט-יב, שלומדים נושאים טכנולוגיים. מעין עוזר מדריך. מתקיים פעם בשבוע אחה\"צ בין ספטמבר ליוני. מתקיימת גם הכשרת פתיחה. ", "location": "בפריסה של 30 מוקדים ברחבי הארץ", "description": "תכנית משותפת של עמותת בוגרי 8200 ועמותת אחריי! המיועדת לבני ובנות נוער בכיתות ט'-יב', בה רוכשים כלים טכנולוגיים חדשים ללא צורך בידע מקדים במחשבים כמו: בניית אתרים, תכנות בשפת Python, ניתוח נתונים (DATA) , בינה מלאכותית (AI) ועבודה על פרויקטים טכנולוגיים עם עובדים ועובדות מההייטק הישראלי. מטרת התכנית הינה לקדם שוויון הזדמנויות, מוביליות חברתית ולספק מיומנויות טכנולוגיות ופיתוח אישי לבני ובנות נוער מהפריפריה הגיאו-חברתית בישראל. ", "contact": "מוריאל - אחראית מתנדבים", "phone": "050-2688801", "email": "milgaim@ahari.org.il", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "עמותת הלל", "type": "ארגון חברתי שמטרתו להעמיק את תחושת שייכותם של סטודנטים לעם היהודי - מתוך תפיסת עולם פלורליסטי", "location": "טכניון, אוני' ת\"א ואוני' בן גוריון", "description": "עיקר ההתנדבות כוללת ניהול עמודי האינסטגרם והפייסבוק של הארגון.", "contact": "", "phone": "", "email": "טכניון - \nhttps://hillelisrael.wufoo.com/forms/zme9jex191yga8/ תל אביב- orrg@hillelisrael.org בן גוריון - leec@hillelisrael.org", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "צפון", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "עמותת עלם", "type": "תפקידי המתנדב ב”עלם” מגוונים ומאתגרים: – נדרשת התחייבות אחת לשבוע\nתפקידים ישירים מול בני הנוער. יצירת קשר פרטני/חונכות עם בני הנוער, איתור נוער ברחוב, יעוץ בגובה העיניים, הפעלת קבוצות בנושאים שונים – סדנאות וכו’.\nלכל אורך ההתנדבות ניתנות הכשרות מקצועיות באופן קבוצתי ופרטני.", "location": "כל הארץ", "description": "\nעמותת עלם מסייעת לבני נוער צעירים/ות במצבי סיכון ומצוקה בישראל להיחלץ ממצבם ולמצוא את מקומם בחברה כבוגרים וכאזרחים תורמים, לעצמם, למשפחתם ולחברה הישראלית.\n", "contact": "", "phone": "03-7686666", "email": "", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "\"אחרי לבגרות\"  ", "type": "המלגאים בפרויקט מלווים את הקבוצה לאורך שנת הפעילות בבית הספר, במתכונת שבועית של 3.5 שעות אחה\"צ, ומהווים חלק אינטגראלי מהצוות - לוקחים חלק בפעילויות לימודיות וחברתיות כאחד. חצי שעה נוספת בשבוע מיועדת לשיחות אישיות עם חניכים, ישיבות צוות, הכנה לשיעור וכו'.", "location": "מחוז צפון- חיפה, קריית ביאליק, נצרת עילית, טבריה, בית שאן, קצרין, חצור הגלילית, חדרה, דלית-אל-כרמל, זרזיר, עוספייה. מחוז מרכז- נתניה, ת\"א, רחובות, ראש העין, לוד, ירושלים, רמלה. מחוז דרום- באר שבע, קריית מלאכי, קריית גת, אשדוד.", "description": "פרויקט \"אחריי! לבגרות\" נועד להגיש לבגרות במתמטיקה ברמה של 3 יח\"ל, בני נוער שנשרו/על סף נשירה מהמערכת הפורמאלית ובני נוער מתקשים אחרים, ובכך ליצור אצלם תחושת מסוגלות עצמית וחווית הצלחה שתועתק למישורים נוספים בחייהם. זאת, תוך הקניית ערכים חינוכיים כגון אחריות, תרומה לקהילה, התמדה ועוד. הפרויקט פעיל זה 8 שנים ב- 25 מרכזים ברחבי הארץ.", "contact": "ניצן - רכז מתנדבים", "phone": "054-4986398", "email": "milgaim@ahari.org.il", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "ירושלים", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "אחריי לצה\"ל", "type": "", "location": "כל הארץ", "description": "תכנית ההכנה לצבא נועדה להגביר את הנכונות והמוכנות לשירות צבאי משמעותי בקרב בנות ובנים בגילאי 16-18, מתוך אמונה כי שירות משמעותי בצה\"ל הוא מפתח להצלחה בחיים האזרחיים. בתהליך החינוכי עוברים בני הנוער אימונים פיזיים, הדרכות ודיונים, התנדבות בקהילה וסדרות שטח, תוך פיתוח האישיות והידיעה כי ניתן לסמן מטרה ולחתור אליה בהצלחה תוך התמודדות עם המשברים שבדרך.", "contact": "ניצן - רכז מתנדבים", "phone": "054-4986398", "email": "", "category": "עמותות וארגונים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "עמותת פוש", "type": "עמותת פוש מעניקה שיעורים פרטיים בחינם לילדים מרקע סוציו-אקונומי נמוך", "location": "ברחבי הארץ", "description": "א'-יב' בתחומי מתמטיקה, אנגלית, שפה ועוד תחומי לימוד נדרשים. השיעורים פיזיים!", "contact": "קרן פלטה", "phone": "03-5354965", "email": "keren@pushedu.org", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "הקרן לרווחה לנפגעי השואה בישראל", "type": "יש שלוש תוכניות:\n•\tגשר לקשר – קשר עם ניצול שואה להפגת בדידות. מפגש שבועי לאורך כל השנה.\n•\tMY DAY- חגיגת ימי הולדת לניצולי שואה טלפונית או בביתם. הבקשות נשלחות בקבוצת וואטסאפ שקטה.\n•\tסיירת התנדבות – סיוע לפי קריאה לעזרה נקודתית לניצולי שואה – קניות, ליווי לבדיקות, מילוי טפסים ועוד. הבקשות נשלחות בקבוצת וואטסאפ שקטה.", "location": "כל הארץ", "description": "הקרן לרווחת נפגעי השואה הוקמה על ידי ניצולי שואה, בעבורי ניצולי שואה. הקרן החלה לפעול בשנת 1994 בסיוע מרכז הארגונים של ניצולי השואה ובשיתוף ועידת התביעות, במטרה לסייע לניצולי השואה החיים בישראל.\nנכון לספטמבר 2024, חיים בישראל כ-130,000 ניצולי שואה. כרבע מהם מתקיימים מקצבת זקנה והבטחת הכנסה בלבד, וחיים הלכה למעשה בעוני ומתקשים להזדקן בכבוד.", "contact": "בתאל", "phone": "549662578", "email": "https://www.tfaforms.com/5039134", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "מקוון", "region": "מקוון", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": "קרן מיראז'", "type": "תוכנית \"מחוברים לחיים\" מחברת בין אזרחים ותיקים לבין מתנדבים בפריסה ארצית.\nהתוכנית מקנה ידע בשימוש בסמרטפון לאזרחים ותיקים. לאזרחים ניתנת חוברת מידע והחונכים מסייעים להם בלמידה של תפעול אפליקציות וכו'. ", "location": "פריסה ארצית\n", "description": "כל אזרח ותיק מקבל חוברת למידה. המתנדבים עוברים הכשרה, שבמסגרתה הם מקבלים כלים להדרכה נכונה, טובה ויעילה לגיל השלישי ובכלל. וגם הדרכה על עולמם של בני הגיל השליש.\nזמני פתיחת הקורס והלו\"ז יעשה בתאום מולכם. תנאי הכרחי לקורס הינו טלפון חכם אשר יהיה ברשות כל משתתף.\nקישור לסרטון שמסביר על התוכנית :\nhttps://www.youtube.com/watch?v=4j3AmYYQ3GU&ab_channel=MerageFoundation\nקישור לאתר עם הסבר על התוכנית:\nhttps://merage.org.il/he/projects/מחוברים-לחיים/", "contact": "זואי", "phone": "054-7439233", "email": "", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": "מרכז קליטה כרמיאל", "type": "סיוע לעולים חדשים בלימוד השפה העברית, סיוע בשיעורי בית, ניהול שיחה, סיוע בפעילויות סביב חגים ומועדים.", "location": "מרכז קליטה כרמיאל", "description": "", "contact": "חדוה", "phone": "052-609-1435", "email": "", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "צפון", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "פתחון לב כרמיאל", "type": "בעיקר אריזת מזון וסידור המחסן", "location": "כרמיאל", "description": "סיוע לנזקקים", "contact": "איתן", "phone": "050-5771534", "email": "", "category": "עמותות וארגונים", "subcategory": "אריזות מזון וסיוע למזון", "location_type": "פיזי", "region": "צפון", "website": "", "value_proposition": "🍞 תסייע להאכיל משפחות במצוקה - כל חבילה שתארוז תגיע ישירות לשולחן שבת של משפחה"}, {"name": "מרכז קליטה  \"אביה\" באר שבע", "type": "קליטת עולים חדשים מאתיופיה", "location": "באר שבע", "description": "מחפשים מתנדבים בתחומי הדרכה, חניכה, מחשוב, גינון ועוד. שעות הפעילות 8-20 בימים א-ה.", "contact": "עדי", "phone": "052-6146857", "email": "", "category": "עמותות וארגונים", "subcategory": "קליטה ועלייה", "location_type": "פיזי", "region": "דרום", "website": "", "value_proposition": "🌍 תעזור לעולים חדשים להשתלב בחברה הישראלית - תהיה גשר בין תרבויות"}, {"name": "עמותת  - לשובע\n", "type": "מסעדות \"לשובע\" מסעדות המספקות מידי יום וללא תשלום יותר מ 2000 ארוחות חמות.\nהמסעדות נמצאות בתל אביב, עכו וכרמיאל.\n\"אסיף העיר\" הפעלת ניידות לאיסוף וחלוקת מזון עודף ממסעדות ואולמות אירועים\n\"קדימה\" רשת בתי נוער לחינוך משלים לילדים בסיכון ממשפחות מצוקה. לבתי הנוער, הפרוסה –\nמקריית שמונה ועד ערד, מגיעים ילדים ונוער בסיכון הזקוקים לעזרה בלימודים לליווי אישי וקידום\nבכל התחומים.", "location": "כל הארץ", "description": "הגשת המזון מתבצעת בימים א-ו,\nבין השעות 10:00-14:00. יתקבלו מתנדבות/ים מגיל 18 ועד 80. אסיף העיר - במשך כל ימי השבוע, בין השעות 17:00-21:00, 22:00-01:00 יתקבלו מתנדבות/ים בעלי רישיון נהיגה, עם ותק נהיגה של שנה ומגיל 21. בתי הנוער פועלים בימים א'-ה', בין השעות - 13:00-18:30 . בחופשות בתי הספר פועלים בתי הנוער במתכונת קייטנה, בין השעות 10:00-16:00", "contact": "רן דרי, רכז מתנדבים", "phone": "052-6879609", "email": "hitnadvut@lasova.org.il", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "מוקד קליטה בית סמואל יוצאי הקהילה האתיופית בבאר שבע", "type": "המוקד פועל 5 ימים בשבוע, בבוקר כמוקד פניות וקבלת קהל (מיצוי זכויות) ומועדון קשישים, בערב פעילויות נוער וילדים הכולל מועדון נוער/עבודה עם ילדים ומבוגרים (פעילות לימודית וחברתית). הסיוע יכול להיות לימודי לילדים ונוער וסיוע בירוקרטי ובלימוד עברית באולפן למבוגרים. ", "location": "באר שבע שכונה יא", "description": "המוקד הינו מיזם של משרד הקליטה בשיתוף עיריית באר שבע ומחלקת קליטה עירונית בחברת כיוונים. המוקד מציע שירותים מגוונים ליוצאי אתיופיה בעיר, סיוע בתחום הנוער והפעלת חוגים, תיגבור לימודי, מועדון נוער , תחום תעסוקה ,הכנה לצה\"ל ופניות נוספות ", "contact": "", "phone": "08-6199076", "email": "Shoshanas@kivunim7.co.il", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "פיזי", "region": "דרום", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": "עמותת \"למרחק\"", "type": "סיוע לפעילות העמותה: תוכנית לקידום תעסוקתי של יוצאי אתיופיה לעבודה מפרנסת עם אופק תעסוקתי ההולמת את השכלתם וכישוריהם, וזאת באמצעות יצירת מסלול קידום מותאם אישית לכל משתתף.  ", "location": "חדרה, באר שבע, רחובות, אשדוד, ירושלים, נתניה, פתח תקווה חיפה וראשון לציון. התוכנית ממוקמת בתוך תשתית אוניברסלית בישוב (מרכזי צעירים למעט חיפה ובאר שבע ).", "description": "• סיוע בשיווק איתור וגיוס משתתפים לתוכנית.\n• סיוע לימודי למשתתפים מתקשים.\n• עדכון בסיס הנתונים של המשתתפים.\n• סיוע בארגון פעילויות קבוצתיות כמו סיורים/ קבוצות למידה/ ימי חשיפה להשכלה גבוהה או הכשרה מקצועית ועוד...\n", "contact": "טובה מנהלת ההדרכה ", "phone": "050-2229440", "email": "Tova.lamerhak@gmail.com", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "ירושלים", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "אגף הרווחה עיריית ב\"ש", "type": "הדרכה דיגיטלית למבוגרים בזום, אימוני כושר למבוגרים בזום, שיעורי אנגלית למבוגרים בזום", "location": "באר שבע ובזום", "description": "", "contact": "שגית", "phone": "050-2314313", "email": "", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "מקוון", "region": "מקוון", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": "השומר החדש ", "type": "שמירה על שטחים חקלאיים משמרת של 8 שעות.", "location": "בצפון, בבקעה, אזור מגידו, דרום ועוד.", "description": "השומר החדש הינו ארגון חברתי, חינוכי וציוני שהוקם בשנת 2007 בכדי לשמור על אדמות המדינה תוך סיוע והעצמת החקלאים וגורמי האכיפה, לצד חיבור אזרחים וצעירים לאדמה, לאהבת הארץ ולזהות ציונית.\nפעולות הסיוע והחיבור נעשות על-ידי התנדבות חקלאית מגוונת לצד פעילויות חינוכיות.", "contact": "חמ\"ל", "phone": "*9263 ", "email": "", "category": "עמותות וארגונים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "לא מוגדר", "website": "", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "ארגון דור לדור", "type": "מטרה לגשר על הנתק בחברה הישראלית שנוצר בין הדור הצעיר לדור הותיק. עיקרי הפעילות כוללים: פגישות שבועיות או דו שבועיות עם קשישים, עזרה פיזית ואירועים חד פעמיים בעיקר של חגים. ", "location": "באר שבע, ירושלים, ת\"א.", "description": "מיזמים חברתיים בהם מתקיים קשר בין-דורי בין צעירים לאזרחים ותיקים. גמישות מירבית בימים ובשעות הפעילות.", "contact": "יעל קווה - רכזת מתנדבים", "phone": "052-7866408", "email": "", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "פיזי", "region": "ירושלים", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": "עמותת אנוש", "type": "ישנם 2 סוגי התנדבויות: הנחיית תוכן לקבוצות או ליווי פרטני/ בקבוצות קטנות להקניית מיומנויות שונות – שתיהן בהתאם לצורכי מקבלי השירות ולעולמות התוכן של הסטודנטיות.ים - במרכזים החברתיים ו/או התעסוקתיים בפריסה ארצית", "location": "מרכזים חברתיים (בשעות אחה\"צ) – אילת, אשדוד, באר שבע, בית\"ר עילית, בית שמש, בת ים, חדרה, חולון, חיפה, ירושלים, כפר סבא, כרמיאל, לוד, מצפה רמון, נהריה, נתניה, עפולה, פרדס חנה, פתח תקוה, צפת, קרית אונו, קרית גת, קרית ים, קרית שמונה, ראשון לציון, רחובות, רמת גן, רמת השרון, שדרות, תל אביב\n\nמרכזים תעסוקתיים (בשעות הבוקר) – אילת, אשדוד, באר שבע, בית שמש, בת ים, גבעתיים, חיפה, כפר סבא, כרמיאל, נס ציונה, נתניה, עפולה, קרית גת, ראשון לציון, רמלה, רמת השרון, שדרות, תל אביב", "description": "אנוש הינו הארגון המוביל והמשפיע בישראל לקידום בריאות ורווחה נפשית ומעניק רצף מענים ושירותים מקצועיים ומותאמים אישית בעולמות המניעה, הטיפול והשיקום בגישה מיודעת טראומה, הוליסטית ואינטגרטיבית, לא.נשים במצבים רגשיים שונים ולאלו המתמודדים עם מגבלה נפשית ובני משפחותיהם ופועל למיצוי זכויותיהם, להנגשת ידע ולקידום מודעות ומדיניות בתחום הבריאות והרווחה הנפשית., כבר למעלה מ- 45 שנה. עם כ-1200 עובדים וכ-1000 מתנדבים אנו מובילים עשייה ב- 85 מרכזים בפריסה ארצית רחבה. ומעניקים סיוע לכ-16 אלף א.נשים מכל הגילים ומכל המגזרים ולבני המשפחות התומכים בהם, ב- 6 תחומי עשייה עיקריים: נוער וצעירים, דיור והוסטלים, חלופות אשפוז, תעסוקה וקריירה, חברה וקהילה ומשפחות.", "contact": "יערה - מנהלת התנדבות", "phone": "5873* /\n074-7556155/\n052-6166610", "email": "info@enosh.org.il\nyaara.s@enosh.org.il", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "ירושלים", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "האגודה למלחמה בסרטן", "type": "", "location": "", "description": "לתיאום ההתנדבות - יש לפנות קודם לרכזת. נא ל-א להתקשר ישירות לעו\"ס - דליה.", "contact": "עו\"ס דליה שטרן", "phone": "\n03-5721650", "email": "dalia_s@cancer.org.il", "category": "עמותות וארגונים", "subcategory": "בריאות וחולים", "location_type": "פיזי", "region": "לא מוגדר", "website": "", "value_proposition": "🏥 תעניק תקווה ונחמה לחולים ומשפחותיהם - נוכחות שלך תעשה את ההבדל ברגעים הקשים"}, {"name": "עמותת צ'יימס ישראל", "type": "מסלולי ההתנדבות – \nאתם בוחרים את המסגרת בה תרצו להתנדב!  \nמדריכים ועוזרי מדריך- המתנדבים מוזמנים להשתלב בתפקידי הדרכה או כעוזרי מדריכים במסגרות צ‘יימס ישראל השונות. הכשרה וליווי – עלינו! \nחונכים אחד על אחד- חונכות אישית עם ילדים/בוגרים עם מוגבלות, לקידום והעצמה על פי תכנית אישית, תוך קבלת ליווי והכשרה על ידי אנשי המקצוע שלנו במסגרות השונות.\nליווי ותמיכה בהטמעת טכנולוגיה מסייעת – סיוע לחניכים עם מוגבלות פיזית ומילולית, שאינם יכולים לתקשר במילים באמצעות טכנולוגיה, המאפשרת להם להתבטא ולהתנהל בסביבתם. \nמפעילי חוגים- אצלנו במסגרות כמעט בכל יום מועבר חוג בתחומים כגון: בישול, יצירה, ריקוד, צילום ועוד. היד נטויה והסטודנט/ית יוכלו לבחור איזה חוג להפעיל בהתאם לנטיות ליבם/ן ולפי התחביבים! \nמדריך ומלווה בסדנאות העבודה- השתלבות במרכזים התעסוקתיים שלנו, המאפשרים לאנשים עם מוגבלות את הזכות לעבוד בכבוד ולהרגיש כחלק מהקהילה. ההתנדבות במפעלים אלו מעצימה במיוחד ומאפשרת למתנדב/ת לפתח קשרים אישיים ומעניינים עם האדם עם המוגבלות, ובאותה הזדמנות לסייע לו בהגדלת התפוקה היומית. ", "location": "פריסה גיאוגרפית רחבה - מאזור השרון ועד אשקלון: אשקלון, חולון, תל-אביב, יפו, רמת השרון, הוד-השרון, רעננה, מודיעין, ראש העין, כפר-סבא, אריאל ובמגזר הערבי. \nשעות התנדבות מגוונות- מסגרות צ‘יימס השונות פועלות החל משעות הבוקר המוקדמות ועד שעות אחה“צ המאוחרות, 6 ימים בשבוע כולל יום שישי, ומאפשרות גמישות בשעות ההתנדבות.", "description": "עמותת צ'יימס ישראל הינה ארגון ללא מטרות רווח הפועל מאז שנת 1991 למען שיפור איכות חייהם של אנשים עם מוגבלות. \nהעמותה מפעילה כ-25 מסגרות ותוכניות ליותר מ-1,400 אנשים ובני משפחותיהם. \nהעמותה פועלת למען אנשים עם מגוון מוגבלויות, כגון מוגבלות שכלית התפתחותית, נכויות פיזיות, נפגעי נפש, אוטיזם, נכויות התפתחותיות ועוד. \nמקבלי השירותים הם מגיל חצי שנה ועד זקנה, ללא הבדל גזע, לאום או דת, בפריסה גיאוגרפית רחבה ", "contact": "מעיין מאור", "phone": "052-6329008", "email": "www.chimesisrael.org.il\nvolunteer@chimesisrael.org.il\n", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "מרכז", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "בית הגלגלים", "type": "מרכזים תעסוקתיים - נועדו לאפשר שיקום תעסוקתי על פני רצף הכולל מגוון רחב של אפשרויות תעסוקה כך שכל מקבל שירות יוכל לבחור את המסלול התעסוקתי המתאים לו ולממש את הפוטנציאל האישי שלו תוך רכישת כלים, פיתוח וחיזוק מיומנויות תעסוקתיות וחברתיות במטרה לעודד לעצמאות מירבית והסתגלות לשגרת יום ודרכי התנהלות רווחות בעולם העבודה.", "location": "במרכז– בהרצליה פיתוח (קרוב לאזור התעשייה)\nמנהלת בית, אביטל 052-8384666\n\nבצפון– במושב בוסתן הגליל (ליד עכו)\nמנהל בית, יואב 052-8388666\n\nבירושלים – במושב אבן ספיר (ליד הדסה עין כרם)\nמנהלת בית, מאיה 052-8385666\n \nבדרום – בקיבוץ אורים (ליד אופקים)\nמנהלת בית, ניצן 052-8387666", "description": "עמותת בית הגלגלים פועלת משנת 1979 בשישה בתים חברתיים-נגישים ברחבי הארץ, מפעילה ומפתחת תכניות עבור ילדים, בני נוער ומבוגרים עם מוגבלות פיזית. המפגשים והפעילות שמקיים בית הגלגלים מהווים הזדמנות חשובה לילדים ולבני הנוער הללו לבלות, ולהתפתח בחברת בני גילם, ולפתח כישורים וכלים לחיות חיים עצמאיים.\nבמקביל הפעילות מאפשרת להורים ולשאר בני המשפחה הפוגה מהטיפול התובעני בילד עם מוגבלות, כשהוא נמצא בידיים בטוחות ועוטפות.", "contact": "", "phone": "", "email": "", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "פיזי", "region": "ירושלים", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": " אח גדול-  למען חיילים בודדים", "type": "מסלולי התנדבות\nליווי אישי של חיילים בודדים קרביים\nהכנה לצה''ל לעולים חדשים\nהדרכה בבתי החייל – מועדונים\n\"בתים חמים\" ליווי חיילים בדירות אל''ח\nסיוע אקדמי במכינת עולים\nפרויקט \"אח לשפה\" סיוע למלשבים לקראת הגיוס\nמשפחת אח גדול – אירועים\nהכנה לצה''ל לעולים מצרפת – מסע צרפתי", "location": "כל הארץ", "description": "עמותת “אח גדול” היא יוזמה חברתית ייחודית של מאות סטודנטים מתנדבים כולם – חיילים בודדים משוחררים. מתוך ערכים של ציונות, נתינה, משפחה וישראליות על כל גווניה, אנחנו מאמינים כי יש ביכולתנו לחבר את החיילים הבודדים עם החברה הישראלית ולהעניק להם כתובת אישית ב”גובה העיניים”.", "contact": "דוד ורטחה", "phone": "052-7859732", "email": "info@achgadol.org\nhttps://www.achgadol.org", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "מרכזי צעירים ברחבי הארץ", "type": "בהתאם לדרישת המרכז", "location": "כל הארץ", "description": "", "contact": "יש לפנות למרכז הצעירים במקום מגורייך", "phone": "", "email": "", "category": "עמותות וארגונים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "i - school", "type": "שיעורים פרטיים מקוונים לתלמידי היסודי במקצועות הליבה (אנגלית או חשבון)", "location": "כל הארץ", "description": "אנו דואגים שכל תלמיד שזקוק לסיוע בלימודים ואין ביכולתו לממן שיעורים פרטיים במחירי השוק, יקבל שיעורים פרטיים וליווי אישי במקצועות הליבה. אנו מחברים בין מתנדבי העמותה לתלמידים, כך שכל מתנדב מלווה באופן אישי תלמיד במשך שנת הלימודים - ״אחד על אחד״.", "contact": "מעיין רכזת מתנדבים", "phone": "054-7881127", "email": "https://wkf.ms/3WLKGJM", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "מכינת יואל בר אילן", "type": "מתגברים לסטודנטים במקצועות: מתמטיקה 3/4/5 יח\"ל, סטטיסטיקה, שיטות מחקר, אנגלית. הכל ברמה טרום אוניברסיטאית. התגבורים בד\"כ מתקיימים בזום.", "location": "בר אילן/זום", "description": "מכינה ליוצאי אתיופיה בבר אילן", "contact": "הילה", "phone": "052-2499582", "email": "", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "מקוון", "region": "מקוון", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "פט\"ל", "type": "שיעורי עזר לתלמידי תיכון במתמטיקה, פיזיקה ואנגלית. אחת לשבוע, למשך שעתיים לפי נוחות הסטודנט והתלמידים, בקבוצות קטנות (2-3 תלמידים), זום/פרונטלית (בטכניון או ברחבי חיפה).", "location": "טכניון", "description": "תוכנית פט\"ל הינה תוכנית הדגל של הטכניון בה סטודנטים מעבירים שיעורי עזר לבני נוער בעלי פוטנציאל ומוטיבציה גבוהה. ", "contact": "שיר", "phone": "052-7826469", "email": "petel.technion@gmail.com", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "מקוון", "region": "מקוון", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "אור שלום", "type": "חונכות לימודית לתלמידי כיתות ז'-ח' במשפחתונים. החונכות היא פרטנית - בעיקר עזרה בשיעורי בית, הכנה למבחנים, אסטרטגיות למידה. ההתנדבות היא פעם בשבוע אחהצ לאורך כל השנה. ", "location": "באר שבע, חולון (אזור), אשקלון, ירושלים, מבשרת, דרום תל אביב", "description": "הארגון מטפל בילדים בהשמה חוץ ביתית - אומנה ומשפחתונים. המטרה לתת לילדים תוכניות העשרה חוץ לימודיות. ", "contact": "צוריה לקס", "phone": "054-5724220", "email": "tzuriyal@orr-shalom.co.il", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "פיזי", "region": "ירושלים", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "עמותת לב חש", "type": "יש 3 פרוייקטים מרכזיים:\n1.\tאריזה וחלוקת מזון בחיפה בימי שלישי בבוקר/צהריים\n2.\tסיוע בחנות קהילתית של ציוד יד שנייה שפתוחה 3 פעמים בשבוע (פעם אחת בלבד אחהצ בין 16-19) – בעיקר סידור וסיוע ללקוחות.\n3.\tחונכות אישית ולימודית לילדים חולי סרטן, אחים של ילדים חולים ומחלימים בביתם בכל אזור הצפון. שעה וחצי בשבוע+הדרכות. ההתנדבות הזאת היא לאורך כל שנת הלימודים.", "location": "חיפה והצפון", "description": "פעילות העמותה מתמקדת בשלושה תחומים עיקריים: מתן סיוע למשפחות נזקקות, מתן תמיכה וסיוע לילדים חולים ומשפחותיהם, וסיוע לקשישים.\n\nבמסגרת פעילות העמותה: מרפאות שיניים, מרכז ריהוט חשמל וכלי בית, מרכז חלוקת מזון, פרויקטים למען ילדים חולי סרטן ובני משפחותיהם, מועדון קשישים ניצולי שואה, תוכניות סיוע לקשישים, קורסים ועוד.", "contact": "רישום דרך האתר https://levchash.co.il/%D7%9E%D7%AA%D7%A0%D7%93%D7%91%D7%99%D7%9D/", "phone": "  04-8672999 שלוחה 3", "email": "", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "פיזי", "region": "צפון", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": "מגוון עמותות המסייעות לבע\"ח", "type": "", "location": "כל הארץ", "description": "", "contact": "", "phone": "", "email": "", "category": "עמותות וארגונים", "subcategory": "בעלי חיים", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "🐾 תציל ותטפל בבעלי חיים נזקקים - תקדם רווחת בעלי חיים ואחריות חברתית"}, {"name": "עמותת חברים לעת זקנה", "type": "במסגרת ההתנדבות תגיעו לבית הקשיש, ותסייעו לו להמשיך לו לגדל את חיית המחמד שלו בביתו (בד\"כ הוצאה לטיולים).", "location": "כל הארץ", "description": "הסיוע כולל: טיול עם הכלב, החלפת חול בארגז החתול, ליווי לוטרינר וכד'", "contact": "ויקה", "phone": "077-8994140", "email": "https://forms.office.com/r/kT4k3DhH1y", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": "יוזמת מתחשבים", "type": "״מתחשבים״ היא יוזמה ישראלית התנדבותית לאיסוף, השמשה והפצה של מחשבים מחודשים, היוזמה נולדה כחלק ממהלך רחב לצמצום הפער הדיגיטלי שבו אנחנו דואגים למחשבים אישיים עבור עשרות אלפי תלמידים שאין להם.", "location": "כל הארץ", "description": "פרטים על ההתנדבות: 3 שעות שבועיות, הפעילות היא מקוונת וכוללת עריכת שיחות טלפון, נדרש לעבור תהליך מיון קצר.", "contact": "", "phone": "", "email": "👈יש למלא את השאלון https://forms.gle/cZkrdWuDjuE8g9ML9", "category": "עמותות וארגונים", "subcategory": "חינוך וחונכות", "location_type": "מקוון", "region": "מקוון", "website": "", "value_proposition": "💡 השפעה ישירה על עתיד הדור הצעיר - תעזור לסטודנט/תלמיד להצליח ולממש את הפוטנציאל שלו"}, {"name": "זכרון בסלון", "type": "הרבה מהעזרה היא עבודה מהבית (מהמחשב/הפלאפון). יש לבצע מינימום 30 שעות התנדבות. ארגון שני אירועי שיא: חלוקת משלוחי מנות בפורים לשורדי השואה, ואירוח בסלונים בערב יום השואה.  חודשי הפעילות פברואר-אפריל.", "location": "כל הארץ", "description": "מדובר ביוזמה חברתית, המאפשרת לציין את ערב יום השואה בצורה משמעותית - בסלון הבית בין משפחה וחברים. במפגש המורכב בעדות של ניצול, חלק אומנותי ודיון. ", "contact": "נעם", "phone": "050-8896802", "email": "noam@zikaronbasalon.com", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": "FOA  - המאבק למניעת אנטישמיות ברשת", "type": "ההתנדבות מקוונת ומטרתה לנטר תכנים אנטישמיים ברשת", "location": "כל הארץ", "description": "הכשרות: חובה על המתנדבים לעבור שתי הכשרות בסיסיות בנות שעה כל אחת למתנדבים חדשים, בנושאים מגוונים: ● הדרכה מעשית לניטור תכנים שלב אחר שלב; מדיניות הקהילה של הרשתות החברתיות; הבדלים ודמיון בין אנטישמיות ברשת במדינות שונות ובשפות שונות; הכחשת שואה. ● מתודת הניטור של העמותה לצד זאת, המתנדבים מוזמנים להצטרף להעשרות מקוונות מדי כשבועיים שיעסקו במגוון נושאים: בריונות רשת, להט\"בופוביה, גזענות, צורות שונות של שנאה, אנטישמיות במדינות שונות בעולם במרחב המקוון ובמרחב הפיזי-ציבורי ועוד", "contact": "דריה  - מנהלת פרויקטים ומתנדבים", "phone": "https://foantisemitism.org/הצטרפו-אלינו/ ", "email": "Volunteers@FOAntisemitism.org", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "מקוון", "region": "מקוון", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": "מגדל אור", "type": "רוצים לעזור לעובדים עם לקות ראייה או עיוורון להצליח בעבודה?\nלעתים חומרים מקצועיים בעבודה, כמו מסמכים, תמונות או נתונים, לא נגישים עבור אנשים עם לקות ראייה או עיוורון, גם בעת שימוש בטכנולוגיה מסייעת. במטרה לאפשר להם את הכלים כדי להיות הכי טובים בעבודה שלהם ולעבוד בצורה יעילה, אנו מצוותים אותם עם מתנדבים שינגישו להם את החומרים בעבודה.", "location": "התנדבות מקוונת, זמנים גימישים, כל הארץ. נדרשת התחייבות ללפחות 4 חודשים!!", "description": "אנו מחפשים מתנדבים אחראיים, מחויבים, סבלניים, בעלי ידע טכני בסיסי במחשבים, דוברי עברית וערבית אשר יסייעו בהקראה ובהנגשת חומרים (חיפוש חומרים באינטרנט, הכנת מצגות, הנגשת מסמכי pdf לקבצי word וכד'", "contact": "לימור", "phone": "", "email": "limorsh@migdalor.org.il", "category": "עמותות וארגונים", "subcategory": "אנשים עם מוגבלות", "location_type": "מקוון", "region": "מקוון", "website": "", "value_proposition": "♿ תעניק עצמאות ושילוב חברתי - תהיה חלק מהמאבק לשוויון הזדמנויות"}, {"name": "השכנים של רוני", "type": "תפקיד הסטודנט הוא לרכז את הקבוצה - לקלוט מתנדבים, מתן מענה לצרכים מהשטח של המתנדבים והקשישים ועריכת ביקורי בית אחת ל...מדי פעם (בחגים) מתקיימת פעילות מרוכזת. עיקר ההתנדבות היא מהבית. ניתן גם להתנדב לבישול וביקור בית פעמיים בחודש.", "location": "חיפה, ת\"א, רחובות, אופקים, אשקלון", "description": "עמותה צעירה המחברת בין קשישים עריריים/חסרי ביטחון תזנותי/ניצולי שואה ובין מתנדבים. המטרה היא הפגת בדידות וגם דאגה לתזונה מספקת בסופ\"ש, כשאין מסגרות תמיכה פעילות.\nכל קבוצה של 4 מתנדבים מבשלת בסופי שבוע ל2 קשישים לפי תורנות.", "contact": "נעם", "phone": "058-6491855", "email": "info@hearttoplate.org.il", "category": "עמותות וארגונים", "subcategory": "קשישים וניצולי שואה", "location_type": "פיזי", "region": "צפון", "website": "", "value_proposition": "❤️ תיצור קשר משמעותי עם דור השורשים - תפחית בדידות ותשמר על הזיכרון ההיסטורי"}, {"name": "רשות הטבע והגנים", "type": "מגוון התנדבויות בעיקר עם קהל המטיילים או טיפול בבע\"ח", "location": "ברחבי הארץ", "description": "ניתן להתנדב גם בסופי שבוע. בחלק מההתנדבויות נדרשת הכשרה", "contact": "", "phone": "", "email": "https://www.parks.org.il/tag/volunteer/", "category": "עמותות וארגונים", "subcategory": "בעלי חיים", "location_type": "פיזי", "region": "כל הארץ", "website": "", "value_proposition": "🐾 תציל ותטפל בבעלי חיים נזקקים - תקדם רווחת בעלי חיים ואחריות חברתית"}, {"name": "לבחינת מקומות התנדבות נוספים יש  לפנות לרכזות", "type": "", "location": "", "description": "", "contact": "", "phone": "", "email": "", "category": "עמותות וארגונים", "subcategory": "רווחה כללית", "location_type": "פיזי", "region": "לא מוגדר", "website": "", "value_proposition": "🤝 תעשה הבדל משמעותי בחיי אנשים - תחוות את הסיפוק של נתינה וחיבור לקהילה"}, {"name": "ניתן לעיין באתר רוח טובה לחיפוש אחר מקומות התנדבות נוספים  https://www.ruachtova.org.il/", "type": "", "location": "", "description": "", "contact": "", "phone": "", "email": "", "category": "עמותות וארגונים", "subcategory": "רווחה כללית", "location_type": "פיזי", "region": "לא מוגדר", "website": "", "value_proposition": "🤝 תעשה הבדל משמעותי בחיי אנשים - תחוות את הסיפוק של נתינה וחיבור לקהילה"}, {"name": "מרכז צעירים בית ג'אן", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "04-980-2220", "email": "eila4569@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/merkaz.beitjann", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים בית שאן", "type": "מרכז צעירים", "location": "שדרות הארבעה 1, בית שאן", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "04-606-0068", "email": "merkaztzeirim.beitshean@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/honenoshibeitsean/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים ג'וליס", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "04-606-0068", "email": "julisyouthcenter10@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/Julis.Youth.Center/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים דלית אל כרמל", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "04-770-3355", "email": "amirm@daliaec.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/tzarim/?hc_ref=ARThq_812LArqd6RkdfaoD8Bf10axW5P4n_ZnQ1GkoUvF9TPbCBG-5b1HI_eiLUCOKg&fref=nf&__xts__[0]=68.ARCRZ0S5bv9mrZ3Rt8s_Si8y6CRDhLanGwaxBrdQ8lAqdiahrMZgMuZzX_6Vf7hab-9ynO-tJP0tFqsZ4IceI3vOALiv1VgL_LKk-GTKgwjtVKvPn1AHxtmC6leXPt6Cd94UabsbizmY4HXnDjAsJ3YO30odxDwk2UbFihrg--piMwbFDKhLlSVDWUpTTnd4nWMt-b4w2XFmcInosZLOrCb4lNcLyMa4_jmvxgQdSQ8TUZpFVOcKewu9Amyz4YN_Hj6bnY97iEYIyYSnvAN0EWMApyijD6umm5VQyF01xttodaySTWs", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים טירת הכרמל", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "אבשלום בן לולו", "phone": "04-858-1406", "email": "info5@bthere.org.il", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.t-kehilati.co.il/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים חצור הגלילית", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "גל בן יוסף - מנהלת", "phone": "052-7247782", "email": "galbpy1@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://hatzorg.co.il/%D7%9E%D7%A8%D7%9B%D7%96-%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים טבריה", "type": "מרכז צעירים", "location": "רחוב שקד 330 מורדות טבריה, טבריה.", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "אילה - 050-7228624", "phone": "04-6797834\n04-6797836", "email": "revitalpaz12@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/%D7%9E%D7%A8%D7%9B%D7%96-%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D-%D7%98%D7%91%D7%A8%D7%99%D7%94-186482481390350/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים יקנעם", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "04-959-1236", "email": "jobsyoqneam@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/merkazyoqneam", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים ירכא", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים כרמיאל", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "אורלי - 052-8285876", "phone": "04-666-2381", "email": "maayan_h@karmiel.muni.il", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/mzkarmiel", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים מגדל העמק", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "פאולה- 052-8185101", "phone": "04-644-3025", "email": "honenushi@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/honenoshi", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים מעלות", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "שמרית - עזבה.", "phone": "04-9573927 שלוחה 4", "email": "https://youngs-maalot.co.il/index.php/%D7%A6%D7%A8%D7%95-%D7%A7%D7%A9%D7%A8-2/5-%D7%A9%D7%9E%D7%A8%D7%99%D7%AA-%D7%A4%D7%93%D7%99%D7%93%D7%94", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://youngs-maalot.co.il/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים נהריה", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "9729879383", "email": "youngsnahariya@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/YoungNahariya", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים נוף הגליל (נצרת)", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "גל אזולאי", "phone": "04-6057586", "email": "luck4you@nallit.org.il", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/merkaz.zeerim/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים עכו", "type": "מרכז צעירים", "location": "רחוב הרצוג 9, עכו", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "מור- 052-6148138", "phone": "04-991-7477", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/tzeirim.acco/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים עפולה", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "טל- 04-6484281", "phone": "46484280", "email": "mazkirut_yaic@afula.muni.il", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/Focus.afula/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים צפת", "type": "מרכז צעירים", "location": "שדרות ט\"ו, צפת", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "04-770-5598", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/%D7%9E%D7%A8%D7%9B%D7%96-%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D-%D7%A6%D7%A4%D7%AA-397306436994466", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים קצרין", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "050-380-0045", "email": "young.kazrin@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/young.kazrin", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים קרית שמונה", "type": "מרכז צעירים", "location": "רחוב דוד רזיאל 12, קרית שמונה", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "ענבל- 050-8680007", "phone": "04-603-6815", "email": "hamerkazit.k8@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/hamerkazitk8", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים שלומי", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "‏04-619-1468‏", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://he-il.facebook.com/pages/category/Community-Organization/%D7%9E%D7%A8%D7%9B%D7%96-%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D-%D7%A9%D7%9C%D7%95%D7%9E%D7%99-717757778342688/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים קרית ים", "type": "מרכז צעירים", "location": "רחוב קפלן 8, קרית ים", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "לירז אלמקייס", "phone": "054-7559564", "email": "cvcenter100@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "צפון", "website": "https://www.facebook.com/maslulim4u/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים אור עקיבא", "type": "מרכז צעירים", "location": "רחוב עליזה יאנסן, אור עקיבא", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "נקבעה פגישה ב 2/3", "phone": "04-626-2160", "email": "zeirim.or.aqiva@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "מרכז", "website": "https://tzeirimoraqiva.wixsite.com/merkaztzeirim", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים אריאל", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "", "email": "merkaz@tzeirimariel.org.il", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "מרכז", "website": "https://www.facebook.com/tzeirim.ariel", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים בית שמש", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "02-636-2812", "email": "tz.bshemesh@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "מרכז", "website": "https://www.ybshemesh.co.il/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים חדרה", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "04-633-1787", "email": "haderay@bthere.org.il", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "מרכז", "website": "https://www.facebook.com/turbinahadera", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים לוד", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "זיוה מנגסטו - רכזת השכלה גבוהה", "phone": "", "email": "ziva@aluma.org.il", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "מרכז", "website": "https://www.younglod.com/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים רמלה", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "073-240-9730", "email": "merkazt@ramla.muni.il", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "מרכז", "website": "https://www.facebook.com/kshatot/?ref=pages_you_manage", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים ירושלים - מרכז תחילה לצעירים חרדים", "type": "מרכז צעירים", "location": "רחוב שבטי ישראל 22, ירושלים", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "ירושלים", "website": "https://www.young-jerusalem.org.il/?fbclid=IwAR2EWCOIBOhz7panhbxj_q--Hk0k7e_Auun4CG88bKMahEx6EjDkNdQKSn4", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים אופקים", "type": "מרכז צעירים", "location": "רחוב אליהו גולומב 9, אופקים", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "076-545-4460", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.facebook.com/merkazahtzeirim/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים אילת", "type": "מרכז צעירים", "location": "דרך יותם 4 א אילת", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "08-6367583 - נטלי אורטוניוב", "phone": "050-9491310", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.yeilat.co.il/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים אשדוד", "type": "מרכז צעירים", "location": "הציונות 4 סיטי, אשדוד", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "08-860-4028", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.facebook.com/kivoonim", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים אשקלון", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "08-676-6764", "email": "meoravut.ashkelon@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.facebook.com/ashkelonyc", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים באר שבע", "type": "מרכז צעירים", "location": "דרך השלום 16, באר שבע", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "054-728-3849", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.facebook.com/MERKAZSTARTUP/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים דימונה", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "073-213-7733", "email": "meoravutdimona@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.facebook.com/tzeirimdimona", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים ירוחם", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "050-387-6278", "email": "shivuk.zvi@gmail.com", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.facebook.com/zvi.yeruham/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים חורה", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "0546725123‏", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://he-il.facebook.com/%D9%85%D8%B1%D9%83%D8%B2-%D8%B4%D8%A8%D8%A7%D8%A8-%D8%AD%D9%88%D8%B1%D8%A9-%D7%9E%D7%A8%D7%9B%D7%96-%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D-%D7%97%D7%95%D7%A8%D7%94-%D7%94%D7%93%D7%A3-%D7%94%D7%A8%D7%A9%D7%9E%D7%99-257693578319468/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים מצפה רמון", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "08-673-6769", "email": "haminsara@mzp.org.il", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.facebook.com/MZMitzpe", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים נתיבות", "type": "מרכז צעירים", "location": "רחוב ירושלים 6, נתיבות", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "‏073-253-2102‏", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "ירושלים", "website": "https://he-il.facebook.com/pages/category/Cultural-Center/%D7%9E%D7%A8%D7%9B%D7%96-%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D-%D7%A0%D7%AA%D7%99%D7%91%D7%95%D7%AA-1093465844016867/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים ערד", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "08-995-6066", "email": "it@arad.muni.il", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.facebook.com/merkaz.tzeirim.arad/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים קרית גת", "type": "מרכז צעירים", "location": "שדרות העצמאות 47, קרית גת", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "08-681-1871", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.facebook.com/tnufaqg", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים קרית מלאכי", "type": "מרכז צעירים", "location": "רחוב רש\"י 5, קרית מאלכי", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "‏08-8602553‏", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "לא מוגדר", "website": "https://he-il.facebook.com/pages/category/Community/%D7%9E%D7%A8%D7%9B%D7%96-%D7%A6%D7%A2%D7%99%D7%A8%D7%99%D7%9D-%D7%A7%D7%A8%D7%99%D7%99%D7%AA-%D7%9E%D7%9C%D7%90%D7%9B%D7%99-372335762926008/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים קרית עקרון", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.facebook.com/YoungCenterKiryatEkron/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים רמת הנגב", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "08-6564112", "email": "", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://www.facebook.com/MercazTzeirimRNG", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}, {"name": "מרכז צעירים שדרות", "type": "מרכז צעירים", "location": "", "description": "מרכז צעירים המציע מגוון פעילויות והתנדבויות לצעירים באזור", "contact": "", "phone": "08-6621801", "email": "Youngs@sederot.muni.il", "category": "מרכזי צעירים", "subcategory": "נוער וצעירים", "location_type": "פיזי", "region": "דרום", "website": "https://youngsderot.org.il/", "value_proposition": "🌟 תהיה מודל לחיקוי לצעירים - תעזור בעיצוב דור העתיד וחיזוק הקהילה"}];
+        let all = DATA;
+        let filtered = DATA;
+        let activeLocation = 'הכל';
+        let activeCategory = 'הכל';
+
+        function init() {
+            filtered = all;
+            update();
+            highlightActive();
+        }
+
+        function filterByLocation(loc) {
+            activeLocation = loc;
+            applyFilters();
+            highlightActive();
+        }
+
+        function filterByCategory(cat) {
+            activeCategory = cat;
+            applyFilters();
+            highlightActive();
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+
+            filtered = all.filter(i => {
+                const matchSearch = !searchTerm || 
+                    i.name.toLowerCase().includes(searchTerm) ||
+                    (i.description && i.description.toLowerCase().includes(searchTerm)) ||
+                    (i.location && i.location.toLowerCase().includes(searchTerm)) ||
+                    (i.type && i.type.toLowerCase().includes(searchTerm));
+
+                const matchLocation = activeLocation === 'הכל' || i.region === activeLocation;
+                const matchCategory = activeCategory === 'הכל' || i.subcategory === activeCategory;
+
+                return matchSearch && matchLocation && matchCategory;
+            });
+
+            update();
+        }
+
+        function highlightActive() {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            
+            document.querySelectorAll('.chip-location').forEach(c => {
+                if (c.textContent.includes(activeLocation)) {
+                    c.classList.add('active');
+                }
+            });
+            
+            document.querySelectorAll('.chip:not(.chip-location)').forEach(c => {
+                if (c.textContent.includes(activeCategory) || 
+                    (activeCategory === 'הכל' && c.textContent.includes('הכל'))) {
+                    c.classList.add('active');
+                }
+            });
+        }
+
+        function resetAll() {
+            document.getElementById('search').value = '';
+            activeLocation = 'הכל';
+            activeCategory = 'הכל';
+            applyFilters();
+            highlightActive();
+        }
+
+        function update() {
+            updateStats();
+            render();
+        }
+
+        function updateStats() {
+            const online = filtered.filter(i => i.region === 'מקוון').length;
+            document.getElementById('stats').textContent = 
+                `נמצאו ${filtered.length} מקומות התנדבות (💻 ${online} מקוונות)`;
+        }
+
+        function render() {
+            const c = document.getElementById('cards');
+
+            if (filtered.length === 0) {
+                c.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <div class="no-results-text">לא נמצאו תוצאות</div>
+                        <small>נסו לשנות את הסינון</small>
+                    </div>
+                `;
+                return;
+            }
+
+            c.innerHTML = filtered.map((i, idx) => `
+                <div class="card" onclick="showDetail(${idx})">
+                    <div class="badges">
+                        <span class="badge badge-main">${i.category}</span>
+                        ${i.subcategory ? `<span class="badge badge-sub">${i.subcategory}</span>` : ''}
+                        ${i.region === 'מקוון' ? '<span class="badge badge-online">💻 מקוון</span>' : ''}
+                        ${i.region && i.region !== 'מקוון' && i.region !== 'לא מוגדר' ? `<span class="badge badge-region">${i.region}</span>` : ''}
+                    </div>
+
+                    <div class="card-title">${i.name}</div>
+
+                    ${i.location ? `
+                        <div class="card-location">📍 ${i.location}</div>
+                    ` : ''}
+
+                    <div class="card-arrow">←</div>
+                </div>
+            `).join('');
+        }
+
+        function showDetail(idx) {
+            const i = filtered[idx];
+            const modal = document.getElementById('detailModal');
+            const body = document.getElementById('detailBody');
+
+            body.innerHTML = `
+                <div class="detail-badges">
+                    <span class="badge badge-main">${i.category}</span>
+                    ${i.subcategory ? `<span class="badge badge-sub">${i.subcategory}</span>` : ''}
+                    ${i.region === 'מקוון' ? '<span class="badge badge-online">💻 מקוון</span>' : ''}
+                    ${i.region && i.region !== 'מקוון' && i.region !== 'לא מוגדר' ? `<span class="badge badge-region">${i.region}</span>` : ''}
+                </div>
+
+                <div class="detail-title">${i.name}</div>
+
+                ${i.location ? `
+                    <div class="detail-info">
+                        <span class="detail-icon">📍</span>
+                        <span class="detail-text">${i.location}</span>
+                    </div>
+                ` : ''}
+
+                ${i.contact ? `
+                    <div class="detail-info">
+                        <span class="detail-icon">👤</span>
+                        <span class="detail-text">${i.contact}</span>
+                    </div>
+                ` : ''}
+
+                ${i.phone && i.phone !== 'nan' ? `
+                    <div class="detail-info">
+                        <span class="detail-icon">📞</span>
+                        <span class="detail-text" dir="ltr">${i.phone}</span>
+                    </div>
+                ` : ''}
+
+                ${i.email && i.email !== 'nan' && i.email.includes('@') ? `
+                    <div class="detail-info">
+                        <span class="detail-icon">✉️</span>
+                        <span class="detail-text">
+                            <a href="mailto:${i.email.trim()}">${i.email}</a>
+                        </span>
+                    </div>
+                ` : ''}
+
+                ${i.description && i.description !== 'nan' ? `
+                    <div class="detail-description">${i.description}</div>
+                ` : ''}
+
+                ${i.value_proposition ? `
+                    <div class="detail-value">${i.value_proposition}</div>
+                ` : ''}
+
+                <div class="detail-actions">
+                    ${i.email && i.email !== 'nan' && i.email.includes('@') ? `
+                        <a href="mailto:${i.email.trim()}" class="detail-btn detail-btn-email">
+                            ✉️ שלח מייל
+                        </a>
+                    ` : ''}
+                    ${i.phone && i.phone !== 'nan' ? `
+                        <a href="tel:${i.phone.replace(/\s/g, '').replace(/\n/g, '')}" class="detail-btn detail-btn-phone">
+                            📞 התקשר
+                        </a>
+                    ` : ''}
+                </div>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDetail() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // סגירה בלחיצה על הרקע
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target.id === 'detailModal') {
+                closeDetail();
+            }
+        });
+
+        document.getElementById('search').addEventListener('input', applyFilters);
+
+        init();
+    </script>
+</body>
+</html>
